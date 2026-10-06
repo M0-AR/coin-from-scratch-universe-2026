@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="340" role="img" aria-label="Coin architecture: five parts">
+<defs><style>
+.box{fill:#0f172a;stroke:#38bdf8;stroke-width:2;rx:14}
+.title{fill:#e2e8f0;font:700 20px system-ui,sans-serif}
+.sub{fill:#94a3b8;font:400 13px system-ui,sans-serif}
+.arrow{stroke:#38bdf8;stroke-width:2;marker-end:url(#h)}
+.note{fill:#cbd5e1;font:400 13px system-ui,sans-serif}
+</style>
+<marker id="h" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#38bdf8" stroke-width="2"/></marker>
+</defs>
+<rect width="1000" height="340" fill="#020617"/>
+<text x="30" y="40" fill="#f8fafc" font-size="24" font-weight="800" font-family="system-ui,sans-serif">How the coin fits together (5 parts)</text>
+<g>
+<rect class="box" x="30" y="80" width="170" height="120"/><text class="title" x="45" y="112">1 Fingerprint</text><text class="sub" x="45" y="136">SHA-256</text><text class="sub" x="45" y="156">64 hex chars</text><text class="sub" x="45" y="176">tamper-evident</text>
+<rect class="box" x="220" y="80" width="170" height="120"/><text class="title" x="235" y="112">2 Mined chain</text><text class="sub" x="235" y="136">hash links + nonce</text><text class="sub" x="235" y="156">16x per zero</text><text class="sub" x="235" y="176">retarget ±1</text>
+<rect class="box" x="410" y="80" width="170" height="120"/><text class="title" x="425" y="112">3 Coins (UTXO)</text><text class="sub" x="425" y="136">no balances</text><text class="sub" x="425" y="156">coinbase 50</text><text class="sub" x="425" y="176">in = out + change</text>
+<rect class="box" x="600" y="80" width="170" height="120"/><text class="title" x="615" y="112">4 Signatures</text><text class="sub" x="615" y="136">secp256k1</text><text class="sub" x="615" y="156">sign tx.id</text><text class="sub" x="615" y="176">verify w/ address</text>
+<rect class="box" x="790" y="80" width="180" height="120"/><text class="title" x="805" y="112">5 Network</text><text class="sub" x="805" y="136">full copy/node</text><text class="sub" x="805" y="156">broadcast tx+block</text><text class="sub" x="805" y="176">most work wins</text>
+<line class="arrow" x1="200" y1="140" x2="218" y2="140"/><line class="arrow" x1="390" y1="140" x2="408" y2="140"/><line class="arrow" x1="580" y1="140" x2="598" y2="140"/><line class="arrow" x1="770" y1="140" x2="788" y2="140"/>
+</g>
+<text class="note" x="30" y="240">Double-spend answer: signatures say WHO authorised a spend; the mined chain says WHICH spend came first; the network follows the most-work valid history.</text>
+<text class="note" x="30" y="265">Try it: pool rejects 2nd spend of same coin → block rejects duplicate inputs → fork test proves heavier chain wins (see experiments 04–06).</text>
+<text class="note" x="30" y="300" fill="#64748b">Files: src/coin/hashutil.py · chain.py · utxo.py · wallet.py · node.py · 135-line coin135.py</text>
+</svg>

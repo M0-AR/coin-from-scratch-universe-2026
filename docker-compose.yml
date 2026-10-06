@@ -1,0 +1,23 @@
+services:
+  node1:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      COIN_PRIVATE_KEY: ${NODE1_KEY:-}
+    command: ["python", "-m", "coin.node", "--port", "3001", "--peer", "http://node2:3001", "--peer", "http://node3:3001"]
+  node2:
+    build: .
+    ports:
+      - "3002:3001"
+    environment:
+      PORT: 3001
+    command: ["python", "-m", "coin.node", "--port", "3001", "--peer", "http://node1:3001"]
+  node3:
+    build: .
+    ports:
+      - "3003:3001"
+    environment:
+      PORT: 3001
+    command: ["python", "-m", "coin.node", "--port", "3001", "--peer", "http://node1:3001"]

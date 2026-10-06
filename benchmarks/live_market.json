@@ -1,0 +1,11 @@
+{
+  "btc_usd": 86320.0,
+  "price_source": "coingecko",
+  "progressPercent": 23.363095238095237,
+  "difficultyChange": 4.06792909939917,
+  "estimatedRetargetDate": 1792180157140,
+  "remainingBlocks": 1545,
+  "nextRetargetHeight": 971712,
+  "timeAvg": 585619,
+  "difficulty_source": "mempool.space"
+}

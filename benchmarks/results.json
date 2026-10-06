@@ -1,0 +1,21 @@
+{
+  "pow": {
+    "1": {
+      "nonce": 8,
+      "sec": 0.0
+    },
+    "2": {
+      "nonce": 131,
+      "sec": 0.0
+    },
+    "3": {
+      "nonce": 4386,
+      "sec": 0.01
+    }
+  },
+  "validation": {
+    "blocks": 4,
+    "sec": 0.0001,
+    "valid": true
+  }
+}

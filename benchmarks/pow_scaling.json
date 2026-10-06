@@ -1,0 +1,22 @@
+{
+  "1": {
+    "nonce": 15,
+    "seconds": 0.0,
+    "hash": "0ad529033d60520e55b32d1526c6a7cff3179774de3e554de6cbda8c2a8d4d2b"
+  },
+  "2": {
+    "nonce": 108,
+    "seconds": 0.0,
+    "hash": "00ed6b25e5b1c82927eff0c3129fec9014e6778cea5a076a6ab894c2ec7599a3"
+  },
+  "3": {
+    "nonce": 1801,
+    "seconds": 0.002,
+    "hash": "00074b5985a393a4ec7b39e02f86528fe0d793cfd61e4f157b6b55e3a2aeba3f"
+  },
+  "4": {
+    "nonce": 171823,
+    "seconds": 0.242,
+    "hash": "000029d78e4dc301811e3f47651f0fe83fdea3de1ae763e2e33af9b54d982134"
+  }
+}
