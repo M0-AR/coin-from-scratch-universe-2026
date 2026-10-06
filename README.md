@@ -10,7 +10,7 @@
 
 > **CEO summary (30 seconds):** This repo builds a complete cryptocurrency from zero in Python — the ledger, the mining, and the wallets — in about 135 lines at its core and a full multi-node system around it. Everything is runnable and measured: 8 tests pass, 8 experiments reproduce every claim, and the code re-verifies the *real* Bitcoin genesis block plus live market state. Open the interactive site, press Play, take the quiz, and you will understand crypto better than most interview candidates — then run the 3-node network yourself with one command.
 
-**🌐 Interactive site (quiz + animated demo + charts): open [`docs/preview.html`](docs/preview.html)** — or deploy it as your repo website in 2 minutes ([GitHub Pages setup](#-github-pages--read-this-repo-as-a-website)). No build step, single file, works offline after first load.
+**🌐 Interactive site (quiz + animated demo + charts): open [`docs/preview.html`](docs/preview.html) locally, or live:** [m0-ar.github.io/coin-from-scratch-universe-2026/](https://m0-ar.github.io/coin-from-scratch-universe-2026/) · [`/preview.html`](https://m0-ar.github.io/coin-from-scratch-universe-2026/preview.html) · [`/docs/preview.html`](https://m0-ar.github.io/coin-from-scratch-universe-2026/docs/preview.html) — all three render the same site ([why all three work](#-github-pages--read-this-repo-as-a-website)). No build step, works offline after first load.
 
 ![banner](docs/assets/banner.png)
 
@@ -105,7 +105,7 @@ PYTHONPATH=src python3 experiments/05_signatures.py    # watch the forgery fail
 | Multi-node network | Flask API, broadcast tx/block, most-work fork choice, peer resolve | `src/coin/node.py` | `docker compose up` |
 | Live Bitcoin verification | Re-hash real genesis header; live price + difficulty fetch | `experiments/07_*.py`, `08_*.py` | `benchmarks/*.json` |
 | Benchmarks + charts | PoW scaling, confirmation curve, validation throughput | `benchmarks/`, `docs/assets/` | `make experiments` |
-| Interactive site | Animated demo, charts, diagrams, 10-question quiz | `docs/preview.html` | Open in browser |
+| Interactive site | Animated demo, charts, diagrams, 10-question quiz | `docs/preview.html` (mirrored at root `preview.html`) | Open in browser or any of the 3 live URLs above |
 | Docker 3-node network | One-command network on ports 3001/3002/3003 | `docker-compose.yml` | `docker compose config` |
 | GitHub Pages deploy | Workflow + `.nojekyll` + setup guide | `.github/workflows/pages.yml` | Settings → Pages |
 
@@ -224,7 +224,10 @@ src/coin/
 tests/test_coin.py          # 8 tests mirroring the 8 experiments
 experiments/01..08_*.py     # executable evidence for every claim
 benchmarks/                 # JSON artefacts (pow_scaling, genesis_verify, live_market, results)
-docs/preview.html           # interactive site (demo + charts + quiz) — also GitHub Pages entry
+docs/preview.html           # interactive site (demo + charts + quiz); mirrored at docs/index.html (Pages entry for /docs source)
+preview.html                # root mirror (same site, docs/assets/ paths) — makes /preview.html work under root source
+index.html                  # root entry: redirects to preview.html + fallback links — makes / work under root source
+.nojekyll + docs/.nojekyll  # present in BOTH source folders so static HTML/JS serves as-is either way
 docs/assets/                # banner, pow_scaling, confirmations, architecture
 Dockerfile + docker-compose.yml  # 3-node network (3001/3002/3003)
 ```
@@ -274,14 +277,22 @@ No screen recorder required: open [`docs/preview.html`](docs/preview.html) → *
 
 ## 🌐 GitHub Pages — read this repo as a website
 
-Anyone clicking your Pages link sees `docs/preview.html` as a full website (demo + charts + quiz), not raw markdown.
+Anyone clicking your Pages link gets the full interactive site (demo + charts + quiz), not raw markdown. All three URLs render correctly in the browser:
 
-**Deploy from a branch (2 minutes, 2026 settings path):**
+| URL | What serves it |
+|---|---|
+| [`/`](https://m0-ar.github.io/coin-from-scratch-universe-2026/) | root `index.html` → redirects to `preview.html` |
+| [`/preview.html`](https://m0-ar.github.io/coin-from-scratch-universe-2026/preview.html) | root mirror (identical site, `docs/assets/` paths) |
+| [`/docs/preview.html`](https://m0-ar.github.io/coin-from-scratch-universe-2026/docs/preview.html) | canonical page under `/docs` source |
 
-1. Push this folder to GitHub (`main` branch). Ensure `docs/index.html` exists (it mirrors `preview.html`) and `docs/.nojekyll` exists (already in repo — disables Jekyll so custom HTML/JS serves as-is).
+Why all three work: repo paths mirror under the chosen source (source `/docs` → `docs/x.html` serves at `/x.html`; source `/` → `docs/x.html` serves at `/docs/x.html`). This repo ships mirrors for both settings — canonical page (`docs/preview.html` + `docs/index.html`) plus root copies (`preview.html` + redirect `index.html`) plus `.nojekyll` in **both** folders — so the setup is non-fatal if ignored. Recommended: **Settings → Pages → Source: Deploy from a branch → Branch: `main` → Folder: `/docs`.**
+
+**Deploy checklist:**
+
+1. Push `main` with `docs/index.html` + `docs/.nojekyll` (both in repo) — root mirrors included.
 2. On GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main` → Folder: `/docs` → Save.**
-3. Wait ~1 minute (watch the Pages workflow if you also enabled `.github/workflows/pages.yml`). Your site is live at `https://<you>.github.io/<repo>/`.
-4. Put that URL at the top of this README (replacing the local `docs/preview.html` link) so every visitor lands on the interactive version.
+3. Wait 1–2 min (watch the Actions "pages build and deployment" run). Probe: `/` → 200, `/preview.html` → 200, `/docs/preview.html` → 200.
+4. If `/preview.html` 404s but `/docs/preview.html` 200s, Pages is serving root source — the mirrors above already cover it; or switch Folder to `/docs` and re-probe.
 
 **Alternative (Actions deploy):** Settings → Pages → Source: **GitHub Actions** → the included `pages.yml` uploads `docs/` and deploys on every `main` push. Use this if you customise the build later.
 

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Your Own Coin — Ledger, Mining, Wallets, Network</title>
+<meta name="description" content="Build a complete cryptocurrency from zero in Python. Interactive demo, charts, diagrams and a 10-question quiz from scratch to pro. Live Bitcoin genesis verification.">
+<style>
+:root{--bg:#020617;--bg2:#0b1020;--card:#0f172a;--line:#1e293b;--txt:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#a78bfa;--ok:#34d399;--bad:#f87171;--warn:#fbbf24}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#1e1b4b 0%,var(--bg) 55%) fixed,var(--bg);color:var(--txt);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}header.hero{max-width:1080px;margin:0 auto;padding:64px 24px 24px;text-align:center}
+.badge{display:inline-block;padding:4px 12px;border:1px solid var(--line);border-radius:999px;margin:4px;font-size:13px;background:#0b1226;color:var(--mut)}
+.badge b{color:var(--ok)}
+h1{font-size:clamp(32px,5vw,56px);margin:18px 0 8px;letter-spacing:-1px}
+.sub{color:var(--mut);font-size:19px;max-width:760px;margin:0 auto}
+.ceo{max-width:820px;margin:26px auto;background:linear-gradient(180deg,#0f172acc,#0b1020);border:1px solid var(--line);border-radius:16px;padding:22px 26px;text-align:left}
+.cta{margin:26px 0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{padding:12px 22px;border-radius:12px;border:1px solid var(--acc);background:var(--acc);color:#00131f;font-weight:800;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--acc)}
+nav.sticky{position:sticky;top:0;z-index:5;background:#020617ee;border-block:1px solid var(--line);backdrop-filter:blur(8px)}
+nav.sticky div{max-width:1080px;margin:auto;padding:10px 24px;display:flex;gap:16px;overflow-x:auto;font-size:14px;white-space:nowrap}
+main{max-width:1080px;margin:auto;padding:12px 24px 80px}
+section.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;margin:22px 0}
+h2{margin:0 0 6px;font-size:26px}h3{color:var(--acc2);margin-top:26px}
+p.mut{color:var(--mut)}.grid{display:grid;gap:14px}@media(min-width:760px){.grid.c2{grid-template-columns:1fr 1fr}.grid.c3{grid-template-columns:1fr 1fr 1fr}}
+.tile{background:#0b1226;border:1px solid var(--line);border-radius:12px;padding:16px}
+.tile b{color:#fff}code,kbd{background:#020617;border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-size:13.5px}
+pre{background:#020617;border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;font-size:13.5px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left}th{background:#0b1226}
+img{max-width:100%;border-radius:12px;border:1px solid var(--line)}
+.term{background:#000;border:1px solid var(--line);border-radius:12px;padding:18px;font-family:ui-monospace,Menlo,Consolas,monospace;min-height:220px;font-size:13.5px;white-space:pre-wrap}
+.cur{display:inline-block;width:9px;height:18px;background:var(--acc);vertical-align:-3px;animation:blink 1s infinite}@keyframes blink{50%{opacity:0}}
+.quiz-q{border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0;background:#0b1226}
+.quiz-q.correct{border-color:var(--ok)}.quiz-q.wrong{border-color:var(--bad)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#111c33;color:var(--txt);cursor:pointer}
+.opt:hover{border-color:var(--acc)}.opt.picked-ok{border-color:var(--ok);background:#052e22}.opt.picked-bad{border-color:var(--bad);background:#3b0a0a}
+.expl{display:none;color:var(--mut);font-size:14px;margin-top:8px}.quiz-q.done .expl{display:block}
+.bar{height:10px;background:#0b1226;border-radius:99px;overflow:hidden;border:1px solid var(--line)}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;background:#0b1226}
+footer{color:var(--mut);text-align:center;padding:30px;font-size:13px}
+.copy{float:right;font-size:12px}
+</style>
+</head>
+<body>
+<header class="hero">
+<div><span class="badge"><b>●</b> 8 tests pass</span><span class="badge">8 experiments reproduce</span><span class="badge">Bitcoin genesis verified</span><span class="badge">live market verified</span><span class="badge">MIT</span></div>
+<h1>🪙 Build Your Own Coin</h1>
+<p class="sub">The ledger, the mining, and the wallets — from zero, in Python. Press play, take the quiz, run the network.</p>
+<div class="ceo"><b>30-second summary:</b> every cryptocurrency is the same five parts — fingerprints, a mined chain, coins, signatures, a network. This repo builds all five from scratch (135-line core + full multi-node system), measures every claim (avalanche 52%, ~16× per mining zero, 6-confirmation math), and re-verifies the <i>real</i> Bitcoin genesis block plus live market state. Finish the quiz and you can explain crypto better than most interview candidates.</div>
+<div class="cta"><button class="btn" onclick="document.getElementById('demo').scrollIntoView()">▶ Play the demo</button><button class="btn ghost" onclick="document.getElementById('quiz').scrollIntoView()">🧠 Take the quiz (10 Q)</button><a class="btn ghost" href="https://github.com/">⭐ Star pattern: README-first</a></div>
+<p class="mut">Single file, no build. Deploy: repo Settings → Pages → Deploy from a branch → <code>main</code> → <code>/docs</code>. This page <i>is</i> <code>docs/preview.html</code> (mirrored at <code>docs/index.html</code>).</p>
+</header>
+<nav class="sticky"><div>
+<a href="#beginner">🌱 Beginner</a><a href="#demo">🎬 Demo</a><a href="#parts">🧩 5 parts</a><a href="#charts">📊 Charts</a><a href="#run">🚀 Run</a><a href="#api">🔌 API</a><a href="#quiz">🧠 Quiz</a><a href="#faq">❓ FAQ</a><a href="#pages">🌐 Pages</a>
+</div></nav>
+<main>
+<section class="card" id="beginner"><h2>🌱 Beginner guide — read this and you are a professional</h2>
+<p>Let's work this out in a <b>step-by-step way to be sure we have the right answer</b>. No jargon without an explanation. Each step ends with something you can <i>run</i>.</p>
+<div class="grid c2">
+<div class="tile"><b>Step 1 — Seals.</b> SHA-256 turns any text into a 64-character seal. Change <code>30→90</code>, whole seal changes (52% bits). <br><code>PYTHONPATH=src python3 experiments/01_fingerprint.py</code></div>
+<div class="tile"><b>Step 2 — Notebook.</b> Every page seals the previous page. Rewrite page 1 → seal breaks → page 2 points at stale seal. <br><code>PYTHONPATH=src python3 experiments/02_chain_tamper.py</code></div>
+<div class="tile"><b>Step 3 — Lottery.</b> Re-sealing is cheap, so each page must win a lottery: try numbers until the seal starts with N zeros (~16× per zero). <br><code>PYTHONPATH=src python3 experiments/03_mining_cost.py</code></div>
+<div class="tile"><b>Step 4 — Banknotes, not balances.</b> No balances stored. Alice breaks her 50-note: 30→Bob + 20→Alice change. <br><code>PYTHONPATH=src python3 experiments/04_double_spend.py</code></div>
+<div class="tile"><b>Step 5 — Signatures.</b> Secret number → address by curve multiplication. Sign payment ID; verify with address only. <br><code>PYTHONPATH=src python3 experiments/05_signatures.py</code></div>
+<div class="tile"><b>Step 6 — Agreement.</b> Everyone holds a full copy; most-work valid fork wins; next block breaks ties. <br><code>PYTHONPATH=src python3 experiments/06_forks.py</code></div>
+</div>
+<p class="mut">Checkpoints: after Step 2 you can explain tamper-evidence; after Step 4 the double-spend; after Step 6 the 51% rule. Then prove it in the quiz below.</p>
+</section>
+
+<section class="card" id="demo"><h2>🎬 Demo — the whole story in 10 lines <button class="btn ghost copy" id="playBtn" onclick="playDemo()">▶ Play demo</button></h2>
+<p class="mut">Real output of <code>make demo</code> (coin135.py): two blocks, one payment, pool double-spend + forgery blocked.</p>
+<div class="term" id="term">press ▶ Play demo…<span class="cur"></span></div>
+<p class="mut">Prefer your own recording? Steps: <code>docs/DEMO.md</code> (GIF ≤5 MB, result in first 10 s, transcript below for accessibility).</p>
+</section>
+
+<section class="card" id="parts"><h2>🧩 The 5 parts (what each file does)</h2>
+<div class="grid c3">
+<div class="tile"><b>1 · Fingerprint</b><br><code>src/coin/hashutil.py</code><br>SHA-256, avalanche measure, difficulty checks.</div>
+<div class="tile"><b>2 · Mined chain</b><br><code>src/coin/chain.py</code><br>Block, nonce search, validate loop, retarget ±1, most-work forks.</div>
+<div class="tile"><b>3 · Coins</b><br><code>src/coin/utxo.py</code><br>UTXO, coinbase 50, in==out, change, pool guards.</div>
+<div class="tile"><b>4 · Signatures</b><br><code>src/coin/wallet.py</code><br>secp256k1 keys, <code>04‖X‖Y</code> addresses, RFC6979 sign/verify.</div>
+<div class="tile"><b>5 · Network</b><br><code>src/coin/node.py</code><br>Flask API, broadcast, peer resolve. Aliases for two tutorial dialects.</div>
+<div class="tile"><b>135-line core</b><br><code>coin135.py</code><br>Zero framework. Start here, then read the modules.</div>
+</div>
+<h3>Who is this for</h3>
+<table><tr><th>You</th><th>Do this</th></tr>
+<tr><td>Curious beginner</td><td>Beginner guide → quiz → <code>make demo</code></td></tr>
+<tr><td>Student / interviews</td><td>Exps 01–06 → FAQ → whiteboard the 5 parts with numbers</td></tr>
+<tr><td>Teacher</td><td><code>docs/DEMO.md</code> 60-min lab: demo → break-it → re-verify</td></tr>
+<tr><td>Researcher</td><td>§5 seeds + <code>paper/PHD_ROADMAP.md</code>: fees, Merkle, ASERT, checkpoints</td></tr>
+<tr><td>Builder / auditor</td><td><code>src/coin/node.py</code> + <code>benchmarks/*.json</code> (every number regenerable)</td></tr>
+</table>
+</section>
+
+<section class="card" id="charts"><h2>📊 Measured, not quoted</h2>
+<div class="grid c2">
+<div><img src="docs/assets/pow_scaling.png" alt="Proof-of-work cost vs difficulty (measured nonces, log scale)"><p class="mut">Mining: 15 → 108 → 1,801 → 171,823 nonces for 1–4 zeros (~16×/zero, geometric noise). Regenerate: <code>experiments/03_mining_cost.py</code>.</p></div>
+<div><img src="docs/assets/confirmations.png" alt="Double-spend success vs confirmations"><p class="mut">Confirmations: 6 blocks ≈ 0.024% at 10% attacker, ≈13% at 30%. Convention, not protocol. Regenerate: <code>experiments/06_forks.py</code>.</p></div>
+</div>
+<img src="docs/assets/architecture.svg" alt="Architecture: five parts flow" style="margin-top:12px">
+<pre>genesis recomputed: 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f  ✓ byte-exact
+nonce=2083236893  bits=0x1d00ffff  time=1231006505 (2009-01-03)  ✓ under target
+live: BTC ~$86.3k (CoinGecko) · next retarget ≈ +4–5% (mempool.space)  2026-10-06</pre>
+</section>
+
+<section class="card" id="run"><h2>🚀 Run it (3 commands)</h2>
+<pre>python3 -m pip install -r requirements.txt
+make test        # 8 passed
+make demo        # 2 blocks, 1 payment, attacks blocked</pre>
+<pre>make experiments               # all 8 exps + benchmarks/*.json
+docker compose up --build      # 3 nodes: :3001 :3002 :3003
+curl http://localhost:3001/blocks
+curl -X POST http://localhost:3001/mineBlock</pre>
+</section>
+
+<section class="card" id="api"><h2>🔌 API (both dialects)</h2>
+<table><tr><th>Method</th><th>Path</th><th>Does</th></tr>
+<tr><td>GET</td><td><code>/blocks</code> (= <code>/chain</code>)</td><td>full chain</td></tr>
+<tr><td>POST</td><td><code>/mineBlock</code> (= <code>/mine</code>)</td><td>seal pool + coinbase, broadcast</td></tr>
+<tr><td>POST</td><td><code>/sendTransaction</code> (= <code>/transactions/new</code>)</td><td>validate → mempool → broadcast</td></tr>
+<tr><td>GET</td><td><code>/balance?address=04…</code> · <code>/address/04…</code></td><td>wallet sum + UTXOs</td></tr>
+<tr><td>POST/GET</td><td><code>/addPeer</code> · <code>/peers</code> · <code>/nodes/resolve</code></td><td>peers + adopt heaviest valid chain</td></tr>
+</table>
+<p class="mut">Config: target block time 10 s, retarget 10 blocks, coinbase 50 (Bitcoin: 600 s, 2016 blocks, 3.125). Flags: <code>--port</code>, <code>--peer</code> (repeat), <code>COIN_PRIVATE_KEY</code>.</p>
+</section>
+
+<section class="card" id="quiz"><h2>🧠 Quiz — from scratch to pro (10 questions)</h2>
+<p class="mut">Instant explanations. Score <b>8+/10</b> and you can whiteboard all five parts. Your score never leaves this page.</p>
+<div class="bar"><i id="qbar"></i></div><p class="mut" id="qscore">0 / 10 answered · 0 correct</p>
+<div id="qbox"></div>
+<div class="cta"><button class="btn ghost" onclick="resetQuiz()">↺ Retake quiz</button></div>
+<p class="mut" id="qverdict"></p>
+</section>
+
+<section class="card" id="faq"><h2>❓ FAQ (interview answers)</h2>
+<details open><summary><b>What stops the double-spend?</b></summary>Signatures authorise; the chain orders. Pool reserves the coin (2nd spend rejected at creation), blocks reject duplicate inputs, forks resolve by most work. Try Exps 04 + 06.</details>
+<details><summary><b>Where is my balance?</b></summary>Nowhere on-chain. Nodes store unspent outputs; wallets sum yours. See <code>/address/…</code>.</details>
+<details><summary><b>Why 6 confirmations?</b></summary>At 10% attacker: ~0.024% success — but ~13% at 30%. At 50%+: nothing helps. It's economics (hardware + energy + price crash), not cryptography.</details>
+<details><summary><b>Is this real money?</b></summary>No — learning toy. No fees/Merkle/scripts/halving/persistence. That list is the extension roadmap.</details>
+<details><summary><b>What do I break on purpose?</b></summary>Reward 50→5000 (Exp 02), pool double-spend (04), forged amount (05), secret fork (06). Each script shows the rejection.</details>
+</section>
+
+<section class="card" id="pages"><h2>🌐 Read this repo as a website (GitHub Pages)</h2>
+<ol><li>Push <code>main</code> with <code>docs/index.html</code> + <code>docs/.nojekyll</code> (both already in repo).</li>
+<li>GitHub → <b>Settings → Pages → Source: Deploy from a branch → Branch: <code>main</code> → Folder: <code>/docs</code> → Save</b>.</li>
+<li>Wait ~1 min → <code>https://&lt;you&gt;.github.io/&lt;repo&gt;/</code>. Or use <b>Source: GitHub Actions</b> with included <code>pages.yml</code>.</li></ol>
+<p class="mut">Glossary: <b>hash</b>=seal · <b>nonce</b>=lottery ticket · <b>difficulty</b>=zeros required · <b>coinbase</b>=mint tx · <b>UTXO</b>=unspent banknote · <b>mempool</b>=waiting room · <b>fork</b>=competing tips · <b>51%</b>=majority rewrite (prohibitively expensive at scale).</p>
+</section>
+</main>
+<footer>MIT · Reproduce: <code>make test &amp;&amp; make experiments</code> · Numbers regenerate from code + live public data · Learning toy — never hold real value.</footer>
+<script>
+const DEMO=[
+["$ PYTHONPATH=src python3 coin135.py",""],
+["fingerprint: 7248dd920315f023a8374aa47fc59e621c0a8716f7ddd3a4a9d7b68dac55baa3",""],
+["changed    : 611f3445009b3e0c82d9de4125f6b8c2f0fdc9fdcacd6ef58bb48748e7ce4cae",""],
+["genesis: a659991506db648f8b3d0982edc6520aa182cb12c8517bea97e376df0e4c6f75 alice: 50","✓ seal links ok"],
+["pool double-spend blocked: ok","✓ signatures valid, 2nd spend rejected"],
+["block1: 00331b1ea0457561b0622d664bffbdf017982b5a624895811dfdc0d97a3a0a11 nonce: 152 alice: 20 bob: 30","✓ mined: 2 zeros"],
+["forgery caught: True","✓ tampered amount fails verify"],
+["fork choice: honest wins","✓ most work wins"],
+["Two blocks, one payment, pool double-spend + forgery blocked. Toy coin only.","done"]
+];
+let demoTimer=null;
+function playDemo(){const t=document.getElementById('term');t.innerHTML='';let i=0;clearInterval(demoTimer);
+demoTimer=setInterval(()=>{if(i>=DEMO.length){clearInterval(demoTimer);t.innerHTML+='<span class="cur"></span>';return;}
+const[line,note]=DEMO[i];t.innerHTML+=line+(note?'  <span style="color:#34d399">'+note+'</span>':'')+'\n';t.scrollTop=t.scrollHeight;i++;},420);}
+const QUIZ=[
+["SHA-256 turns any text into…",["A 64-char fingerprint","A private key","A coin balance","A peer address"],0,"Deterministic seal: same input → same 64 hex chars; fingerprints everything downstream."],
+["Changing 1 input char does what?",["Nothing visible","Flips ~52% of bits","Halves the length","Reveals the key"],1,"Avalanche: we measured 133/256 flips on '30→90'. Tampering can't hide."],
+["Each block stores about the previous block…",["Its miner's name","Its hash","Its private key","Its price"],1,"Hash link: prev-hash pointer makes history tamper-evident end-to-end."],
+["You change block 0 reward 50→5000. What happens?",["Nothing","Only that block updates","Stored hash mismatches + next link breaks","Chain gets faster"],2,"Recompute the hash and the next prev-link still points at the old one. Exp 02 shows both breaks."],
+["Mining means…",["Solving for x in an equation","Trying nonces until hash has N zeros","Voting with coins","Encrypting wallets"],1,"Lottery, not math puzzle: ~16× harder per extra hex zero. Exp 03 measures it."],
+["Each extra hex zero costs…",["~2×","~16×","~1000×","nothing extra"],1,"16 possibilities per hex char. Our run: 15→108→1801→171823 nonces (noisy geometric draws)."],
+["Where is your balance stored?",["In a balances table","Nowhere — wallets sum your unspent outputs","In the mempool","On CoinGecko"],1,"UTXO model: coins are notes; balance is a wallet-side sum. No account rows exist."],
+["Alice (50) pays Bob 30. Result?",["Bob 30, Alice 30","Bob 30, Alice 20 change","Bob 50","Bob 15, fee 15"],1,"Whole-note spend: consume 50, create 30→Bob + 20→Alice change. Σin == Σout."],
+["Mallory edits 30→3 keeping the old signature. Verify?",["Passes","Fails — tx.id changed","Passes after 1 conf","Fails only on mainnet"],1,"Signature covers tx.id. New id + old sig = invalid; full validation rejects. Exp 05."],
+["Two miners find a block at once. Who wins?",["First seen","Chain with most total work; next block breaks tie","Longer name","Higher fee"],1,"Fork rule: Σ16^difficulty. Rewriting needs out-mining everyone → 51% rule. 6 conf ≈ 0.024% at 10% attacker."]
+];
+let answered=Array(QUIZ.length).fill(null);
+function renderQuiz(){const box=document.getElementById('qbox');box.innerHTML='';
+QUIZ.forEach((q,i)=>{const d=document.createElement('div');d.className='quiz-q';d.id='q'+i;
+d.innerHTML='<b>Q'+(i+1)+'. '+q[0]+'</b>'+q[1].map((o,j)=>'<button class="opt" onclick="answer('+i+','+j+')">'+o+'</button>').join('')+'<div class="expl">💡 '+q[3]+'</div>';
+box.appendChild(d);});updateScore();}
+function answer(i,j){if(answered[i]!==null)return;answered[i]=j;const q=QUIZ[i],d=document.getElementById('q'+i);
+d.classList.add('done');const btns=d.querySelectorAll('.opt');
+btns[q[2]].classList.add('picked-ok');if(j!==q[2]){btns[j].classList.add('picked-bad');d.classList.add('wrong');}else d.classList.add('correct');
+updateScore();}
+function updateScore(){const n=answered.filter(x=>x!==null).length,c=answered.filter((x,i)=>x===QUIZ[i][2]).length;
+document.getElementById('qbar').style.width=(n/QUIZ.length*100)+'%';
+document.getElementById('qscore').textContent=n+' / '+QUIZ.length+' answered · '+c+' correct';
+const v=document.getElementById('qverdict');
+if(n===QUIZ.length){v.innerHTML=c>=8?'🏆 <b>Pro.</b> You can whiteboard all five parts with numbers. Next: <code>make experiments</code> + break-it-on-purpose.':c>=5?'💪 <b>Close.</b> Re-read the explanations above, retake, then run Exps 04–06.':'🌱 <b>Keep going.</b> Replay the Beginner steps, then retake — each answer links to its experiment.';}}
+function resetQuiz(){answered=Array(QUIZ.length).fill(null);renderQuiz();document.getElementById('qverdict').textContent='';}
+renderQuiz();
+</script>
+</body>
+</html>
